@@ -10,7 +10,7 @@
             class="input-area"
             placeholder="请输入地址集，每行一个地址"
             name="addressSet"
-            @change="handleAddressChange"
+            @change="transform"
             :autosize="{ minRows: rows, maxRows: rows }"
         />
 
