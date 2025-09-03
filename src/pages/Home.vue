@@ -8,14 +8,22 @@
                     <span class="section-title">M3U8地址集</span>
                     <t-button theme="danger" @click="clear">清空</t-button>
                 </div>
-                <t-textarea
+                <CodeTextArea
+                    v-model="addressSet"
+                    class="input-area"
+                    placeholder="请输入地址集，每行一个地址"
+                    height="100%" 
+                    width="100%"
+                    language="m3u8"
+                ></CodeTextArea>
+                <!-- <t-textarea
                     v-model="addressSet"
                     class="input-area"
                     placeholder="请输入地址集，每行一个地址"
                     name="addressSet"
                     @change="transform"
                     :autosize="{ minRows: rows, maxRows: rows }"
-                />
+                /> -->
             </div>
 
             <!-- 转换后 -->
@@ -24,14 +32,23 @@
                     <span class="section-title">转换后</span>
                     <t-button type="primary" @click="copy">复制</t-button>
                 </div>
-                <t-textarea
+                <CodeTextArea
+                    v-model="afterTrans"
+                    class="input-area"
+                    placeholder="转换后的内容"
+                    height="100%" 
+                    width="100%"
+                    language="m3u8"
+                    readonly
+                ></CodeTextArea>
+                <!-- <t-textarea
                     v-model="afterTrans"
                     class="input-area"
                     placeholder=""
                     name="afterTrans"
                     :autosize="{ minRows: rows, maxRows: rows }"
                     readonly
-                />
+                /> -->
             </div>
         </div>
     </div>
@@ -41,17 +58,21 @@
 import { ref, reactive, watch, onMounted, nextTick } from "vue";
 import { MessagePlugin } from 'tdesign-vue-next';
 
-const rows = 16;
+const rows = 3;
 // 转换前的地址集
-const addressSet = ref("");
+const addressSet = ref('');
 // 转换后的地址集
-const afterTrans = ref("");
+const afterTrans = ref('');
 
 // 清空
 function clear() {
-    addressSet.value = "";
-    afterTrans.value = "";
+    addressSet.value = '';
+    afterTrans.value = '';
 }
+
+watch(addressSet, () => {
+    transform();
+}, { immediate: true });
 
 // 地址转换
 function transform() {
@@ -99,7 +120,7 @@ function copy() {
 .container {
     padding: 2% 2%;
     /* 设置容器最小高度为视口高度，确保充满屏幕 */
-    min-height: 100vh;
+    height: 100%;
     box-sizing: border-box;
 }
 
